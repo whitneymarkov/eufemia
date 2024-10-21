@@ -237,7 +237,8 @@ function DateComponent(props: Props) {
     path,
     className,
     label,
-    value,
+    labelDescription,
+    value: fieldPropValue,
     help,
     hasError,
     disabled,
@@ -250,16 +251,19 @@ function DateComponent(props: Props) {
     ...rest
   } = useFieldProps(preparedProps)
 
-  const rangeValue = useMemo(() => {
-    // Move undefined values here
+  const { value, startDate, endDate } = useMemo(() => {
     if (!range) {
-      return
+      return {
+        value: fieldPropValue,
+        startDate: undefined,
+        endDate: undefined,
+      }
     }
 
-    const [startDate, endDate] = value.split('|')
+    const [startDate, endDate] = fieldPropValue.split('|')
 
-    return { startDate, endDate }
-  }, [range, value])
+    return { value: undefined, startDate, endDate }
+  }, [range, fieldPropValue])
 
   useMemo(() => {
     if (path && value) {
@@ -280,13 +284,13 @@ function DateComponent(props: Props) {
     <FieldBlock {...fieldBlockProps}>
       <DatePicker
         id={id}
-        date={!range ? value : undefined}
+        date={value}
         disabled={disabled}
         show_input={true}
         show_cancel_button={true}
         show_reset_button={true}
-        start_date={range ? rangeValue.startDate : undefined}
-        end_date={range ? rangeValue.endDate : undefined}
+        start_date={startDate}
+        end_date={endDate}
         status={hasError ? 'error' : undefined}
         suffix={
           help ? (
