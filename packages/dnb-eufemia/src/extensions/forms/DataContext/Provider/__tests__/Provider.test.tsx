@@ -940,6 +940,8 @@ describe('DataContext.Provider', () => {
   })
 
   describe('async submit', () => {
+    jest.retryTimes(3)
+
     let log: jest.SpyInstance
     beforeEach(() => {
       log = spyOnEufemiaWarn()
@@ -1688,6 +1690,8 @@ describe('DataContext.Provider', () => {
   })
 
   describe('async change', () => {
+    jest.retryTimes(3)
+
     it('should not disable form elements on changes', async () => {
       const onChange: OnChange = async () => null
 

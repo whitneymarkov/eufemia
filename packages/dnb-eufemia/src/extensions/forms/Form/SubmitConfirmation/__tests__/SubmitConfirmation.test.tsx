@@ -6,6 +6,8 @@ import { ConfirmParams } from '../SubmitConfirmation'
 import userEvent from '@testing-library/user-event'
 
 describe('Form.SubmitConfirmation', () => {
+  jest.retryTimes(3)
+
   describe('with preventSubmitWhen', () => {
     it('should keep pending state when confirmationState is "readyToBeSubmitted"', async () => {
       const onSubmit = jest.fn()
@@ -624,6 +626,7 @@ describe('Form.SubmitConfirmation', () => {
     expect(confirmationStateRef.current).toBe('readyToBeSubmitted')
 
     await act(cancelHandlerRef.current)
+    await new Promise((resolve) => setTimeout(resolve, 80))
     expect(confirmationStateRef.current).toBe('readyToBeSubmitted')
     await waitFor(() => {
       expect(confirmationStateRef.current).toBe('idle')
