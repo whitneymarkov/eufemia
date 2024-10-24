@@ -208,7 +208,7 @@ export function useCheckboxOrToggleOptions({
         activeData.push(props)
       }
 
-      const label = children ?? title
+      const label = title ?? children
       const status = getStatus(error, info, warning)
       const suffix = help ? (
         <HelpButton size="small" title={help.title}>
