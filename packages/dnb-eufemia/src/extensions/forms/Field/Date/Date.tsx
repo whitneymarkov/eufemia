@@ -344,6 +344,13 @@ const datePickerPropKeys = [
   'alignPicker',
   'onDaysRender',
   'showInput',
+  'onDaysRender',
+  'onType',
+  'onShow',
+  'onHide?',
+  'onSubmit',
+  'onCancel',
+  'onReset',
 ]
 
 function getDatePickerProps(props: Props) {
