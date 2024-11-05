@@ -19,8 +19,8 @@ describe('P element', () => {
     const element = document.querySelector('.dnb-p__size--large')
 
     expect(Array.from(element.classList)).toEqual([
-      'dnb-p',
       'dnb-p__size--large',
+      'dnb-p',
     ])
   })
   it('has correct style when size and a modifier is defined', () => {
@@ -28,9 +28,9 @@ describe('P element', () => {
     const element = document.querySelector('.dnb-p__size--medium')
 
     expect(Array.from(element.classList)).toEqual([
-      'dnb-p',
       'dnb-p--medium',
       'dnb-p__size--medium',
+      'dnb-p',
     ])
   })
   it('has correct style when several modifiers are defined', () => {
@@ -38,24 +38,24 @@ describe('P element', () => {
     const element = document.querySelector('.dnb-p__size--small')
 
     expect(Array.from(element.classList)).toEqual([
-      'dnb-p',
       'dnb-p--medium',
       'dnb-p__size--small',
+      'dnb-p',
     ])
   })
   it('has correct style when medium is set to true', () => {
     render(<P medium />)
     const element = document.querySelector('.dnb-p--medium')
     expect(Array.from(element.classList)).toEqual([
-      'dnb-p',
       'dnb-p--medium',
+      'dnb-p',
     ])
   })
   it('has correct style when bold is set to true', () => {
     render(<P bold />)
     const element = document.querySelector('.dnb-p--bold')
 
-    expect(Array.from(element.classList)).toEqual(['dnb-p', 'dnb-p--bold'])
+    expect(Array.from(element.classList)).toEqual(['dnb-p--bold', 'dnb-p'])
   })
   it('should validate with ARIA rules as a p element', async () => {
     const Comp = render(<P {...props} />)

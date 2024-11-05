@@ -424,12 +424,12 @@ describe('Visibility', () => {
         class="dnb-space dnb-space__top--medium dnb-space__bottom--zero dnb-flex-container dnb-flex-stack dnb-flex-container--direction-vertical dnb-flex-container--justify-flex-start dnb-flex-container--align-stretch dnb-flex-container--align-self-stretch dnb-flex-container--spacing-medium dnb-flex-container--wrap dnb-flex-container--divider-space"
       >
         <p
-          class="dnb-p dnb-space__top--zero dnb-space__bottom--zero"
+          class="dnb-space__top--zero dnb-space__bottom--zero dnb-p"
         >
           This is visible 1
         </p>
         <p
-          class="dnb-p dnb-space__top--medium dnb-space__bottom--zero"
+          class="dnb-space__top--medium dnb-space__bottom--zero dnb-p"
         >
           This is visible 2
         </p>
