@@ -250,6 +250,10 @@ function DateComponent(props: Props) {
       return { value: valueProp, startDate: undefined, endDate: undefined }
     }
 
+    if (!valueProp) {
+      return { value: undefined, startDate: undefined, endDate: undefined }
+    }
+
     const [startDate, endDate] = valueProp.split('|')
 
     return { value: undefined, startDate, endDate }
