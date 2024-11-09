@@ -64,7 +64,7 @@ describe('Field.String', () => {
       )
       expect(
         document.querySelector('input').getAttribute('aria-describedby')
-      ).toBe(document.querySelector('.dnb-input__suffix').id)
+      ).toBe(document.querySelector('.dnb-help-button').id)
       expect(
         document
           .querySelector('.dnb-help-button')

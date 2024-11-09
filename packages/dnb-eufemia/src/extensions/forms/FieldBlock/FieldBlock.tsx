@@ -36,6 +36,10 @@ import {
   Identifier,
 } from '../types'
 import type { FormLabelAllProps } from '../../../components/FormLabel'
+import HelpButtonInline, {
+  HelpButtonInlineContent,
+  HelpProps,
+} from '../../../components/help-button/HelpButtonInline'
 import SubmitIndicator from '../Form/SubmitIndicator/SubmitIndicator'
 import { createSharedState } from '../../../shared/helpers/useSharedState'
 import useTranslation from '../hooks/useTranslation'
@@ -96,6 +100,10 @@ export type SharedFieldBlockProps = {
    * Width of contents block, while label etc can be wider if space is available
    */
   contentWidth?: FieldBlockWidth
+  /**
+   * Provide help content for the field.
+   */
+  help?: HelpProps
 }
 
 export type Props = SharedFieldBlockProps &
@@ -135,9 +143,8 @@ function FieldBlock(props: Props) {
     ? fieldBlockContext
     : null
 
-  const sharedData = createSharedState<Props>(
-    'field-block-props-' + (props.id ?? props.forId)
-  )
+  const id = useId(props.id ?? props.forId)
+  const sharedData = createSharedState<Props>('field-block-props-' + id)
   const {
     className,
     forId,
@@ -148,6 +155,7 @@ function FieldBlock(props: Props) {
     labelDescription,
     labelSuffix,
     labelSrOnly,
+    help,
     asFieldset,
     required,
     info,
@@ -453,6 +461,10 @@ function FieldBlock(props: Props) {
     'dnb-forms-field-block',
     width &&
       `dnb-forms-field-block--width-${hasCustomWidth ? 'custom' : width}`,
+    contentWidth &&
+      `dnb-forms-field-block--content-width-${
+        hasCustomContentWidth ? 'custom' : contentWidth
+      }`,
     labelHeight && `dnb-forms-field-block--label-height-${labelHeight}`,
     className
   )
@@ -519,10 +531,11 @@ function FieldBlock(props: Props) {
     )
   }
 
-  const hasLabelDescription = isFragment(labelDescription)
+  const hasLabelContainer = isFragment(labelDescription)
     ? fragmentHasChildren(labelDescription) &&
       !fragmentHasOnlyUndefinedChildren(labelDescription)
     : labelDescription
+  const hasHelp = help?.title || help?.content
 
   return (
     <FieldBlockContext.Provider
@@ -543,12 +556,12 @@ function FieldBlock(props: Props) {
         {...rest}
       >
         <div className={gridClasses}>
-          <LabelDescription labelDescription={labelDescription}>
+          <div className="dnb-forms-field-block__label">
             {(label || labelDescription) && (
               <FormLabel {...labelProps}>
                 <SubmitIndicator state={fieldState}>
                   {label}
-                  {hasLabelDescription && (
+                  {hasLabelContainer && (
                     <span className="dnb-forms-field-block__label-description">
                       {labelDescription}
                     </span>
@@ -556,7 +569,19 @@ function FieldBlock(props: Props) {
                 </SubmitIndicator>
               </FormLabel>
             )}
-          </LabelDescription>
+
+            {hasHelp && (
+              <HelpButtonInline contentId={`${id}-help`} help={help} />
+            )}
+          </div>
+
+          {hasHelp && (
+            <HelpButtonInlineContent
+              contentId={`${id}-help`}
+              className="dnb-forms-field-block__help"
+              help={help}
+            />
+          )}
 
           <div
             className={classnames(
@@ -659,13 +684,6 @@ function CombineMessages({
       </Ul>
     </>
   )
-}
-
-function LabelDescription({ labelDescription, children }) {
-  if (!labelDescription) {
-    return children ?? null
-  }
-  return <div className="dnb-forms-field-block__label">{children}</div>
 }
 
 export function getMessagesFromError(

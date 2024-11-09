@@ -8,7 +8,12 @@
     }
   }
 
-  &:has(+ .dnb-flex-stack > .dnb-card, + .dnb-card) {
+  &:has(
+      + .dnb-card,
+      + .dnb-flex-container > .dnb-card,
+      + .dnb-help-button__content + .dnb-card,
+      + .dnb-help-button__content + .dnb-flex-container > .dnb-card
+    ) {
     &:not([class*='space__left']) {
       @include allAbove(small) {
         margin-left: var(--spacing-medium);
@@ -18,5 +23,11 @@
     &:not([class*='space__bottom']) {
       margin-bottom: var(--spacing-small);
     }
+  }
+}
+
+.dnb-forms-main-heading + .dnb-help-button__content {
+  .dnb-section {
+    margin-top: 1rem;
   }
 }
